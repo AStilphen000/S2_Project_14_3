@@ -38,24 +38,57 @@
 */
 
 var nodeCount = 0; 
-var elementCount = 0;
+var elemCount = 0;
 var textCount = 0;
 var wasCount = 0;
 
+// runs and loads the makeTree() event listener 
 window.addEventListener("load", makeTree);
 
+// set up and placed the node tree within the HTML document and displays the node counts from the document 
 function makeTree() {
+
+      // 
       var asideElement = document.createElement("aside");
-      asideElement.id = "treeBox";
-      treeBox.innerHTML = "<h1>Node Tree</h1>";
+      asideElement.setAttribute("id", "treeBox");
 
-      var sectionElement = document.getElementById("main");
-      sectionElement.appendChild(asideElement);
+      var h1 = document.createElement("h1");
+      h1.textContent = "Node Tree";
 
-      var nodeList = ["ol"]; 
+      asideElement.appendChild(h1);
+      document.getElementById("main").appendChild(asideElement);
+
+      var nodeList = document.createElement("ol"); 
       asideElement.appendChild(nodeList);
-      var sourceArticle = querySelectorAll(sourceArticle);         
+
+      var sourceArticle = document.querySelector("#main article");     
+
+      makeBranches(sourceArticle, nodeList);
 } 
+
+// append node trees to the node tree 
+function makeBranches(treeNode, nestedList) {
+      nodeCount++;
+      var liElem = document.createElement("li");
+      var spanElem = document.createElement("span"); 
+      liElem.appendChild(spanElem);
+      nestedList.appendChild(liElem);
+
+      if (treeNode.nodeType === 1) {
+            elemCount++;
+            spanElem.setAttribute("class", "elementNode");
+            spanElem.textContent = "<" + treeNode.nodeName + ">";
+      } else if (treeNode.textNode === 3) {
+            textCount++;
+            var textString = treeNode.nodeValue;
+      } if (isWhiteSpaceNode(textString)) {
+            wasCount++;
+            spanElem.setAttribute("Class", "whiteSpaceNode")
+      }
+}
+
+
+
 
 
 
